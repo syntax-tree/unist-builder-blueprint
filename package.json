@@ -1,0 +1,37 @@
+{
+  "name": "unist-to-u",
+  "version": "0.0.0",
+  "description": "Convert Unist trees to unist-builder notation",
+  "author": "Eugene Sharygin <eush77@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "homepage": "https://github.com/eush77/unist-to-u",
+  "repository": "eush77/unist-to-u",
+  "bugs": {
+    "url": "https://github.com/eush77/unist-to-u/issues"
+  },
+  "keywords": [
+    "ast",
+    "convert",
+    "dsl",
+    "notation",
+    "syntax",
+    "tree",
+    "u",
+    "unist",
+    "unist-builder"
+  ],
+  "dependencies": {
+    "escodegen": "^1.8.0",
+    "flatmap": "0.0.3"
+  },
+  "devDependencies": {
+    "tape": "^4.4.0",
+    "unist-builder": "^1.0.0"
+  }
+}
