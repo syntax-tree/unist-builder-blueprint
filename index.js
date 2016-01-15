@@ -1,11 +1,10 @@
 'use strict';
 
-var escodegen = require('escodegen').generate,
-    flatmap = require('flatmap');
+var flatmap = require('flatmap');
 
 
 module.exports = function (unist) {
-  var estree = (function toU (node) {
+  return (function toU (node) {
     return {
       type: 'CallExpression',
       callee: {
@@ -31,8 +30,6 @@ module.exports = function (unist) {
       ].filter(Boolean)
     };
   }(unist));
-
-  return escodegen(estree);
 };
 
 

@@ -6,8 +6,6 @@
 
 Convert [Unist] trees to [unist-builder] notation.
 
-Useful for creating test fixtures for example.
-
 [unist]:  https://github.com/wooorm/unist
 [unist-builder]: https://github.com/eush77/unist-builder
 
@@ -19,9 +17,10 @@ Useful for creating test fixtures for example.
 ## Example
 
 ```js
-var unistToU = require('unist-to-u');
+var toU = require('unist-to-u'),
+    escodegen = require('escodegen');
 
-unistToU({
+var estree = toU({
   "type": "root",
   "children": [
     {
@@ -53,7 +52,9 @@ unistToU({
       ]
     }
   ]
-})
+});
+
+escodegen.generate(estree)
 ```
 
 results in the following code:
@@ -71,13 +72,16 @@ u('root', [
 ])
 ```
 
-You can tweak the output format to your liking or even get the ESTree.
-
 ## API
 
 #### `toU(ast)`
 
-Returns JavaScript code in a `unist-builder` notation.
+Converts `ast` to [unist-builder] notation. Returns JavaScript AST in [ESTree] format.
+
+To generate actual JavaScript code from AST, use one of the existing code generators, e.g. [Escodegen].
+
+[estree]: https://github.com/estree/estree
+[escodegen]: https://github.com/estools/escodegen
 
 ## Install
 

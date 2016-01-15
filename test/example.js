@@ -1,8 +1,9 @@
 'use strict';
 
-var unistToU = require('..');
+var toU = require('..');
 
 var test = require('tape'),
+    escodegen = require('escodegen').generate,
     u = require('unist-builder');
 
 var vm = require('vm');
@@ -43,7 +44,7 @@ test('example', function (t) {
     ]
   };
 
-  var code = unistToU(ast);
+  var code = escodegen(toU(ast));
 
   t.equal(code, [
     "u('root', [",
