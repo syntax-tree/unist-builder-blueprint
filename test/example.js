@@ -1,6 +1,7 @@
 'use strict';
 
-var toU = require('..');
+var toU = require('..'),
+    functionBody = require('./lib/function-body');
 
 var test = require('tape'),
     escodegen = require('escodegen').generate,
@@ -46,18 +47,18 @@ test('example', function (t) {
 
   var code = escodegen(toU(ast));
 
-  t.equal(code, [
-    "u('root', [",
-    "    u('subtree', { id: 1 }),",
-    "    u('subtree', { id: 2 }, [",
-    "        u('node', [",
-    "            u('leaf', 'leaf-1'),",
-    "            u('leaf', 'leaf-2')",
-    "        ]),",
-    "        u('leaf', { id: 3 }, 'leaf-3')",
-    "    ])",
-    "])"
-  ].join('\n'));
+  t.equal(code, functionBody(function () {
+    u('root', [
+      u('subtree', { id: 1 }),
+      u('subtree', { id: 2 }, [
+        u('node', [
+          u('leaf', 'leaf-1'),
+          u('leaf', 'leaf-2')
+        ]),
+        u('leaf', { id: 3 }, 'leaf-3')
+      ])
+    ]);
+  }));
 
   t.deepEqual(vm.runInNewContext(code, { u: u }), ast);
   t.end();

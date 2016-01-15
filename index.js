@@ -3,13 +3,16 @@
 var flatmap = require('flatmap');
 
 
-module.exports = function (unist) {
+module.exports = function (unist, opts) {
+  opts = opts || {};
+  opts.builder = opts.builder || 'u';
+
   return (function toU (node) {
     return {
       type: 'CallExpression',
       callee: {
         type: 'Identifier',
-        name: 'u'
+        name: opts.builder
       },
       arguments: [
         {

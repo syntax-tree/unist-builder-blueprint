@@ -74,11 +74,18 @@ u('root', [
 
 ## API
 
-#### `toU(ast)`
+#### `toU(ast, [opts])`
 
 Converts `ast` to [unist-builder] notation. Returns JavaScript AST in [ESTree] format.
 
 To generate actual JavaScript code from AST, use one of the existing code generators, e.g. [Escodegen].
+
+##### `opts.builder`
+
+Type: `String`<br>
+Default: `"u"`
+
+Builder function name.
 
 [estree]: https://github.com/estree/estree
 [escodegen]: https://github.com/estools/escodegen
