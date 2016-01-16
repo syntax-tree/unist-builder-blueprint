@@ -58,8 +58,8 @@ test('example', function (t) {
         u('leaf', { id: 3 }, 'leaf-3')
       ])
     ]);
-  }));
+  }), 'example works');
 
-  t.deepEqual(vm.runInNewContext(code, { u: u }), ast);
+  t.deepEqual(vm.runInNewContext(code, { u: u }), ast, 'code runs');
   t.end();
 });

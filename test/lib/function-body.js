@@ -6,8 +6,21 @@ var acorn = require('acorn'),
 
 // Stringify the body of a function expression
 // into the default Escodegen format.
-module.exports = function (funcExpr) {
-  var code = funcExpr.toString();
-  var estree = acorn.parseExpressionAt(code);
-  return escodegen(estree.body.body[0].expression);
+module.exports = function (builderFn) {
+  var estree = acorn.parseExpressionAt(builderFn.toString());
+
+  if (estree.type != 'FunctionExpression') {
+    throw Error('FunctionExpression expected');
+  }
+
+  var body = estree.body.body;
+
+  if (body.length != 1) {
+    throw Error('Single statement expected');
+  }
+  if (body[0].type != 'ExpressionStatement') {
+    throw Error('ExpressionStatement expected');
+  }
+
+  return escodegen(body[0].expression);
 };
