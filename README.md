@@ -1,6 +1,6 @@
-[![npm](https://nodei.co/npm/unist-to-u.png)](https://npmjs.com/package/unist-to-u)
+[![npm](https://nodei.co/npm/unist-builder-blueprint.png)](https://npmjs.com/package/unist-builder-blueprint)
 
-# unist-to-u
+# unist-builder-blueprint
 
 [![Build Status][travis-badge]][travis] [![Dependency Status][david-badge]][david]
 
@@ -9,15 +9,15 @@ Convert [Unist] trees to [unist-builder] notation.
 [unist]:  https://github.com/wooorm/unist
 [unist-builder]: https://github.com/eush77/unist-builder
 
-[travis]: https://travis-ci.org/eush77/unist-to-u
-[travis-badge]: https://travis-ci.org/eush77/unist-to-u.svg?branch=master
-[david]: https://david-dm.org/eush77/unist-to-u
-[david-badge]: https://david-dm.org/eush77/unist-to-u.png
+[travis]: https://travis-ci.org/eush77/unist-builder-blueprint
+[travis-badge]: https://travis-ci.org/eush77/unist-builder-blueprint.svg?branch=master
+[david]: https://david-dm.org/eush77/unist-builder-blueprint
+[david-badge]: https://david-dm.org/eush77/unist-builder-blueprint.png
 
 ## Example
 
 ```js
-var toU = require('unist-to-u'),
+var toU = require('unist-builder-blueprint'),
     escodegen = require('escodegen');
 
 var estree = toU({
@@ -93,7 +93,7 @@ Builder function name.
 ## Install
 
 ```
-npm install unist-to-u
+npm install unist-builder-blueprint
 ```
 
 ## License

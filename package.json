@@ -1,5 +1,5 @@
 {
-  "name": "unist-to-u",
+  "name": "unist-builder-blueprint",
   "version": "0.0.0",
   "description": "Convert Unist trees to unist-builder notation",
   "author": "Eugene Sharygin <eush77@gmail.com>",
@@ -10,13 +10,14 @@
   "files": [
     "index.js"
   ],
-  "homepage": "https://github.com/eush77/unist-to-u",
-  "repository": "eush77/unist-to-u",
+  "homepage": "https://github.com/eush77/unist-builder-blueprint",
+  "repository": "eush77/unist-builder-blueprint",
   "bugs": {
-    "url": "https://github.com/eush77/unist-to-u/issues"
+    "url": "https://github.com/eush77/unist-builder-blueprint/issues"
   },
   "keywords": [
     "ast",
+    "blueprint",
     "convert",
     "dsl",
     "notation",
