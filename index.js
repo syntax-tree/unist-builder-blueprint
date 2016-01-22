@@ -26,9 +26,7 @@ module.exports = function (unist, opts) {
         },
         node.children && {
           type: 'ArrayExpression',
-          elements: node.children.map(function (child) {
-            return toU(child);
-          })
+          elements: node.children.map(toU)
         }
       ].filter(Boolean)
     };
@@ -66,10 +64,31 @@ function literalNode (value) {
       name: 'undefined'
     };
   }
-  else {
+  else if (typeof value != 'object') {
     return {
       type: 'Literal',
       value: value
+    };
+  }
+  else if (Array.isArray(value)) {
+    return {
+      type: 'ArrayExpression',
+      elements: value.map(literalNode)
+    };
+  }
+  else {
+    return {
+      type: 'ObjectExpression',
+      properties: Object.keys(value).map(function (key) {
+        return {
+          type: 'Property',
+          key: {
+            type: 'Identifier',
+            name: key
+          },
+          value: literalNode(value[key])
+        };
+      })
     };
   }
 }

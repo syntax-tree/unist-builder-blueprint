@@ -27,5 +27,27 @@ test('unist spec', function (t) {
     ]);
   }, 'properties');
 
+  t.checkU(u('node', {
+      array: [1, 2, 3],
+      object: {
+        foo: 'bar',
+        level2: [
+          Object.create(null),
+          String.prototype
+        ]
+      }
+  }), function () {
+    return u('node', {
+      array: [1, 2, 3],
+      object: {
+        foo: 'bar',
+        level2: [
+          {},
+          {}
+        ]
+      }
+    });
+  }, 'composite properties');
+
   t.end();
 });

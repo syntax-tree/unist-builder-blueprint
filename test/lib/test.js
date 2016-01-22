@@ -11,13 +11,22 @@ tape.Test.prototype.checkU = checkU;
 module.exports = tape;
 
 
-function checkU (toUOpts, builderFn, message) {
-  if (typeof toUOpts != 'object') {
-    return checkU.call(this, {}, toUOpts, builderFn);
+// Run `toU` on Unist tree and compare result.
+// `builderFn` is the only required argument.
+function checkU (ast, toUOpts, builderFn, message) {
+  if (typeof ast == 'function') {
+    message = toUOpts;
+    builderFn = ast;
+    return checkU.call(this, builderFn(), {}, builderFn, message);
+  }
+  if (typeof toUOpts == 'function') {
+    message = builderFn;
+    builderFn = toUOpts;
+    return checkU.call(this, ast, {}, builderFn, message);
   }
 
   return this.equal.apply(this, [
-    escodegen(toU(builderFn(), toUOpts)),
+    escodegen(toU(ast, toUOpts)),
     body(builderFn),
     message
   ].filter(Boolean));
