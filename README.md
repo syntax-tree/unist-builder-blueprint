@@ -90,6 +90,18 @@ Builder function name.
 [estree]: https://github.com/estree/estree
 [escodegen]: https://github.com/estools/escodegen
 
+## CLI
+
+See [unist-builder-blueprint-cli].
+
+## Related
+
+- [unist-builder] — helper for creating Unist trees.
+- [unist-builder-blueprint-cli] — CLI for this module.
+
+[unist-builder]: https://github.com/eush77/unist-builder
+[unist-builder-blueprint-cli]: https://github.com/eush77/unist-builder-blueprint-cli
+
 ## Install
 
 ```
