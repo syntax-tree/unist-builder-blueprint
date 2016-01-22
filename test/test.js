@@ -61,5 +61,26 @@ test('unist spec', function (t) {
     }));
   }, 'function properties (throws)');
 
+  t.checkU(function () {
+    return u('node', {
+      position: {
+        start: {
+          line: 1,
+          column: 1
+        },
+        end: {
+          line: 100500,
+          column: 80,
+          offset: 77
+        },
+        indent: [
+          1,
+          2,
+          3
+        ]
+      }
+    });
+  }, 'position property');
+
   t.end();
 });
