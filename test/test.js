@@ -1,6 +1,7 @@
 'use strict';
 
-var test = require('./lib/test');
+var test = require('./lib/test'),
+    toU = require('..');
 
 var u = require('unist-builder');
 
@@ -48,6 +49,17 @@ test('unist spec', function (t) {
       }
     });
   }, 'composite properties');
+
+  t.throws(function () {
+    toU(u('node', {
+      foo: {
+        bar: [
+          'baz',
+          function () { return 'quux' + 'frobozz' }
+        ]
+      }
+    }));
+  }, 'function properties (throws)');
 
   t.end();
 });

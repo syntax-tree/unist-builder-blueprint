@@ -64,6 +64,9 @@ function literalNode (value) {
       name: 'undefined'
     };
   }
+  else if (typeof value == 'function') {
+    throw Error('Unist property contains a function');
+  }
   else if (typeof value != 'object') {
     return {
       type: 'Literal',
