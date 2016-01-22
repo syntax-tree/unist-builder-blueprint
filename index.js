@@ -46,10 +46,7 @@ function propsNode (node) {
           type: 'Identifier',
           name: key
         },
-        value: {
-          type: 'Literal',
-          value: node[key]
-        }
+        value: literalNode(node[key])
       };
     }
   });
@@ -58,4 +55,21 @@ function propsNode (node) {
     type: 'ObjectExpression',
     properties: props
   };
+}
+
+
+// Create ESTree node representing particular JavaScript literal.
+function literalNode (value) {
+  if (value === undefined) {
+    return {
+      type: 'Identifier',
+      name: 'undefined'
+    };
+  }
+  else {
+    return {
+      type: 'Literal',
+      value: value
+    };
+  }
 }
