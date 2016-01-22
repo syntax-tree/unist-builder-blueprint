@@ -18,9 +18,9 @@ module.exports = function (builderFn) {
   if (body.length != 1) {
     throw Error('Single statement expected');
   }
-  if (body[0].type != 'ExpressionStatement') {
-    throw Error('ExpressionStatement expected');
+  if (body[0].type != 'ReturnStatement') {
+    throw Error('ReturnStatement expected');
   }
 
-  return escodegen(body[0].expression);
+  return escodegen(body[0].argument);
 };

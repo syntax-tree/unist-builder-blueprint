@@ -11,18 +11,13 @@ tape.Test.prototype.checkU = checkU;
 module.exports = tape;
 
 
-function checkU (/* [toUArgs...], builderFn, [message] */) {
-  var toUArgs = [].slice.call(arguments);
-  var builderFn = toUArgs.pop();
-  var message;
-
-  if (typeof builderFn != 'function') {
-    message = builderFn;
-    builderFn = toUArgs.pop();
+function checkU (toUOpts, builderFn, message) {
+  if (typeof toUOpts != 'object') {
+    return checkU.call(this, {}, toUOpts, builderFn);
   }
 
   return this.equal.apply(this, [
-    escodegen(toU.apply(null, toUArgs)),
+    escodegen(toU(builderFn(), toUOpts)),
     body(builderFn),
     message
   ].filter(Boolean));

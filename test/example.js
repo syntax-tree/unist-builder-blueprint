@@ -48,7 +48,7 @@ test('example', function (t) {
   var code = escodegen(toU(ast));
 
   t.equal(code, functionBody(function () {
-    u('root', [
+    return u('root', [
       u('subtree', { id: 1 }),
       u('subtree', { id: 2 }, [
         u('node', [
