@@ -37,16 +37,24 @@ module.exports = function (unist, opts) {
 // Create ESTree object literal node representing Unist node properties.
 function propsNode (node) {
   var props = flatmap(Object.keys(node), function (key) {
-    if (key != 'type' && key != 'value' && key != 'children') {
-      return {
-        type: 'Property',
-        key: {
-          type: 'Identifier',
-          name: key
-        },
-        value: literalNode(node[key])
-      };
+    if (key == 'type' || key == 'value' || key == 'children') {
+      return;
     }
+
+    var value = node[key];
+
+    if (key == 'data') {
+      value = JSON.parse(JSON.stringify(value));
+    }
+
+    return {
+      type: 'Property',
+      key: {
+        type: 'Identifier',
+        name: key
+      },
+      value: literalNode(value)
+    };
   });
 
   return props.length && {
@@ -67,7 +75,7 @@ function literalNode (value) {
   else if (typeof value == 'function') {
     throw Error('Unist property contains a function');
   }
-  else if (typeof value != 'object') {
+  else if (value === null || typeof value != 'object') {
     return {
       type: 'Literal',
       value: value

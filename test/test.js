@@ -82,5 +82,34 @@ test('unist spec', function (t) {
     });
   }, 'position property');
 
+  t.checkU(u('node', {
+    data: {
+      null: undefined,
+      functions: [
+        Function.prototype,
+        function () { return 'foo' + 'bar' }
+      ]
+    },
+    specialOnlyOnTop: {
+      data: {
+        null: undefined
+      },
+    }
+  }), function () {
+    return u('node', {
+      data: {
+        functions: [
+          null,
+          null
+        ]
+      },
+      specialOnlyOnTop: {
+        data: {
+          null: undefined
+        }
+      }
+    });
+  }, 'data property');
+
   t.end();
 });
