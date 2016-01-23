@@ -111,5 +111,9 @@ test('unist spec', function (t) {
     });
   }, 'data property');
 
+  t.checkU(function () {
+    return u('text', '');
+  }, 'empty value');
+
   t.end();
 });

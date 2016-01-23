@@ -20,7 +20,7 @@ module.exports = function (unist, opts) {
           value: node.type
         },
         propsNode(node),
-        node.value && {
+        'value' in node && {
           type: 'Literal',
           value: node.value
         },
