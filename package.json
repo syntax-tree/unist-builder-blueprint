@@ -1,6 +1,6 @@
 {
   "name": "unist-builder-blueprint",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Convert Unist trees to unist-builder notation",
   "author": "Eugene Sharygin <eush77@gmail.com>",
   "license": "MIT",
