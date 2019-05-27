@@ -31,7 +31,7 @@
     "flatmap": "0.0.3"
   },
   "devDependencies": {
-    "acorn": "^5.0.0",
+    "acorn": "^6.0.0",
     "escodegen": "^1.8.0",
     "tape": "^4.4.0",
     "unist-builder": "^1.0.0"
