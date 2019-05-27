@@ -1,102 +1,101 @@
 'use strict'
 
-var flatmap = require('flatmap')
+module.exports = function(tree, options) {
+  var settings = options || {}
+  var builder = settings.builder || 'u'
 
-module.exports = function(unist, opts) {
-  opts = opts || {}
-  opts.builder = opts.builder || 'u'
+  return toU(tree)
 
-  return (function toU(node) {
+  function toU(node) {
+    var args = [literal(node.type)]
+    var props = []
+    var key
+
+    for (key in node) {
+      if (key !== 'type' && key !== 'value' && key !== 'children') {
+        props.push(property(key, node[key]))
+      }
+    }
+
+    if (props.length !== 0) {
+      args.push({type: 'ObjectExpression', properties: props})
+    }
+
+    if ('value' in node) {
+      args.push(literal(node.value))
+    } else if ('children' in node) {
+      args.push({type: 'ArrayExpression', elements: node.children.map(toU)})
+    }
+
     return {
       type: 'CallExpression',
-      callee: {
-        type: 'Identifier',
-        name: opts.builder
-      },
-      arguments: [
-        {
-          type: 'Literal',
-          value: node.type
-        },
-        propsNode(node),
-        'value' in node && {
-          type: 'Literal',
-          value: node.value
-        },
-        node.children && {
-          type: 'ArrayExpression',
-          elements: node.children.map(toU)
-        }
-      ].filter(Boolean)
+      callee: identifier(builder),
+      arguments: args
     }
-  })(unist)
-}
-
-// Create ESTree object literal node representing Unist node properties.
-function propsNode(node) {
-  var props = flatmap(Object.keys(node), function(key) {
-    if (key === 'type' || key === 'value' || key === 'children') {
-      return
-    }
-
-    var value = node[key]
-
-    if (key === 'data') {
-      value = JSON.parse(JSON.stringify(value))
-    }
-
-    return {
-      type: 'Property',
-      key: {
-        type: 'Identifier',
-        name: key
-      },
-      value: literalNode(value)
-    }
-  })
-
-  return (
-    props.length && {
-      type: 'ObjectExpression',
-      properties: props
-    }
-  )
+  }
 }
 
 // Create ESTree node representing particular JavaScript literal.
-function literalNode(value) {
+function toValue(value) {
   if (value === undefined) {
-    return {
-      type: 'Identifier',
-      name: 'undefined'
-    }
+    return identifier('undefined')
   }
 
-  if (typeof value === 'function') {
-    throw new TypeError('Unist property contains a function')
-  } else if (value === null || typeof value !== 'object') {
-    return {
-      type: 'Literal',
-      value: value
-    }
-  } else if (Array.isArray(value)) {
-    return {
-      type: 'ArrayExpression',
-      elements: value.map(literalNode)
-    }
-  } else {
-    return {
-      type: 'ObjectExpression',
-      properties: Object.keys(value).map(function(key) {
-        return {
-          type: 'Property',
-          key: {
-            type: 'Identifier',
-            name: key
-          },
-          value: literalNode(value[key])
-        }
-      })
-    }
+  if (
+    value === null ||
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'boolean'
+  ) {
+    return literal(value)
   }
+
+  if (typeof value === 'object') {
+    return Array.isArray(value) ? array(value) : object(value)
+  }
+
+  throw new Error('Invalid non-JSON value in unist tree: ' + String(value))
+}
+
+function array(value) {
+  return {type: 'ArrayExpression', elements: elements(value)}
+}
+
+function object(value) {
+  return {type: 'ObjectExpression', properties: properties(value)}
+}
+
+function property(key, value) {
+  return {type: 'Property', key: identifier(key), value: toValue(value)}
+}
+
+function identifier(name) {
+  return {type: 'Identifier', name: name}
+}
+
+function literal(value) {
+  return {type: 'Literal', value: value}
+}
+
+function elements(value) {
+  var length = value.length
+  var index = -1
+  var values = []
+
+  while (++index < length) {
+    values.push(toValue(value[index]))
+  }
+
+  return values
+}
+
+function properties(value) {
+  var values = []
+  var key
+
+  for (key in value) {
+    values.push(property(key, value[key]))
+  }
+
+  return values
 }
