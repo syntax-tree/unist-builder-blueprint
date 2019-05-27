@@ -24,9 +24,7 @@
   "files": [
     "index.js"
   ],
-  "dependencies": {
-    "flatmap": "0.0.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "acorn": "^6.0.0",
     "escodegen": "^1.0.0",
