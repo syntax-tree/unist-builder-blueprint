@@ -30,10 +30,19 @@
   "devDependencies": {
     "acorn": "^6.0.0",
     "escodegen": "^1.8.0",
+    "nyc": "^14.1.1",
     "tape": "^4.4.0",
     "unist-builder": "^1.0.0"
   },
   "scripts": {
-    "test": "tape test/*.js"
+    "test-api": "node test",
+    "test-coverage": "nyc --reporter lcov tape test/index.js",
+    "test": "npm run test-coverage"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100
   }
 }
