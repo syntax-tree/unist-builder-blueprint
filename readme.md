@@ -1,119 +1,159 @@
-[![npm](https://nodei.co/npm/unist-builder-blueprint.png)](https://npmjs.com/package/unist-builder-blueprint)
-
 # unist-builder-blueprint
 
-[![Build Status][travis-badge]][travis]
-[![Dependency Status][david-badge]][david]
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Sponsors][sponsors-badge]][collective]
+[![Backers][backers-badge]][collective]
+[![Chat][chat-badge]][chat]
 
-Convert [Unist][] trees to [unist-builder][] notation.
-
-## Example
-
-```js
-var toU = require('unist-builder-blueprint'),
-    escodegen = require('escodegen');
-
-var estree = toU({
-  "type": "root",
-  "children": [
-    {
-      "type": "subtree",
-      "id": 1
-    },
-    {
-      "type": "subtree",
-      "id": 2,
-      "children": [
-        {
-          "type": "node",
-          "children": [
-            {
-              "type": "leaf",
-              "value": "leaf-1"
-            },
-            {
-              "type": "leaf",
-              "value": "leaf-2"
-            }
-          ]
-        },
-        {
-          "type": "leaf",
-          "id": 3,
-          "value": "leaf-3"
-        }
-      ]
-    }
-  ]
-});
-
-escodegen.generate(estree)
-```
-
-results in the following code:
-
-```js
-u('root', [
-    u('subtree', { id: 1 }),
-    u('subtree', { id: 2 }, [
-        u('node', [
-            u('leaf', 'leaf-1'),
-            u('leaf', 'leaf-2')
-        ]),
-        u('leaf', { id: 3 }, 'leaf-3')
-    ])
-])
-```
-
-## API
-
-#### `toU(ast, [opts])`
-
-Converts `ast` to [unist-builder][] notation.
-Returns JavaScript AST in [ESTree][] format.
-
-To generate actual JavaScript code from AST, use one of the existing code
-generators, e.g. [Escodegen][].
-
-##### `opts.builder`
-
-Type: `String` Default: `"u"`
-
-Builder function name.
-
-## CLI
-
-See [unist-builder-blueprint-cli][].
-
-## Related
-
-*   [unist-builder][] — helper for creating Unist trees.
-*   [unist-builder-blueprint-cli][] — CLI for this module.
+[**unist**][unist] utility to transform [*trees*][tree] to [`unist-builder`][u]
+notation.
 
 ## Install
+
+[npm][]:
 
 ```sh
 npm install unist-builder-blueprint
 ```
 
+## Usage
+
+```js
+var escodegen = require('escodegen')
+var toU = require('unist-builder-blueprint')
+
+var tree = {
+  type: 'root',
+  children: [
+    {type: 'subtree', id: 1},
+    {
+      type: 'subtree',
+      id: 2,
+      children: [
+        {
+          type: 'node',
+          children: [
+            {type: 'leaf', value: 'leaf 1'},
+            {type: 'leaf', value: 'leaf 2'}
+          ]
+        },
+        {type: 'leaf', id: 3, value: 'leaf 3'},
+        {type: 'void', id: 4}
+      ]
+    }
+  ]
+}
+
+var estree = toU(tree)
+
+console.log(escodegen.generate(estree, {format: {indent: {style: '  '}}}))
+```
+
+Yields:
+
+```js
+u('root', [
+  u('subtree', { id: 1 }),
+  u('subtree', { id: 2 }, [
+    u('node', [
+      u('leaf', 'leaf 1'),
+      u('leaf', 'leaf 2')
+    ]),
+    u('leaf', { id: 3 }, 'leaf 3'),
+    u('void', { id: 4 })
+  ])
+])
+```
+
+## API
+
+#### `toU(tree[, options])`
+
+Transform the given [*tree*][tree] to [`unist-builder`][u] notation.
+
+###### Parameters
+
+*   `tree` ([`Node`][node])
+    — [**unist**][unist] [*tree*][tree] to transform
+*   `options.builder` (`string`, default: `'u'`)
+    — Identifier to use as the callee of the [`CallExpression`][call-expression]
+
+###### Returns
+
+[`ESTreeCallExpression`][call-expression].
+
+To generate actual JavaScript code from the result, use one of the existing code
+generators, such as [`escodegen`][escodegen].
+
+## Related
+
+*   [`unist-builder`][u]
+    — Create [unist][] trees
+*   [`unist-builder-blueprint-cli`](https://github.com/syntax-tree/unist-builder-blueprint-cli)
+    — CLI for this module
+*   [`hastscript`](https://github.com/syntax-tree/hastscript)
+    — Create [hast][] trees
+
+## Contribute
+
+See [`contributing.md` in `syntax-tree/.github`][contributing] for ways to get
+started.
+See [`support.md`][support] for ways to get help.
+
+This project has a [Code of Conduct][coc].
+By interacting with this repository, organisation, or community you agree to
+abide by its terms.
+
 ## License
 
-MIT
+[MIT][license] © Eugene Sharygin
 
-[unist]: https://github.com/wooorm/unist
+<!-- Definitions -->
 
-[unist-builder]: https://github.com/eush77/unist-builder
+[build-badge]: https://img.shields.io/travis/syntax-tree/unist-builder-blueprint.svg
 
-[travis]: https://travis-ci.org/eush77/unist-builder-blueprint
+[build]: https://travis-ci.org/syntax-tree/unist-builder-blueprint
 
-[travis-badge]: https://travis-ci.org/eush77/unist-builder-blueprint.svg?branch=master
+[coverage-badge]: https://img.shields.io/codecov/c/github/syntax-tree/unist-builder-blueprint.svg
 
-[david]: https://david-dm.org/eush77/unist-builder-blueprint
+[coverage]: https://codecov.io/github/syntax-tree/unist-builder-blueprint
 
-[david-badge]: https://david-dm.org/eush77/unist-builder-blueprint.png
+[downloads-badge]: https://img.shields.io/npm/dm/unist-builder-blueprint.svg
 
-[estree]: https://github.com/estree/estree
+[downloads]: https://www.npmjs.com/package/unist-builder-blueprint
+
+[sponsors-badge]: https://opencollective.com/unified/sponsors/badge.svg
+
+[backers-badge]: https://opencollective.com/unified/backers/badge.svg
+
+[collective]: https://opencollective.com/unified
+
+[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+
+[chat]: https://spectrum.chat/unified/syntax-tree
+
+[npm]: https://docs.npmjs.com/cli/install
+
+[license]: license
+
+[contributing]: https://github.com/syntax-tree/.github/blob/master/contributing.md
+
+[support]: https://github.com/syntax-tree/.github/blob/master/support.md
+
+[coc]: https://github.com/syntax-tree/.github/blob/master/code-of-conduct.md
+
+[unist]: https://github.com/syntax-tree/unist
+
+[node]: https://github.com/syntax-tree/unist#node
+
+[tree]: https://github.com/syntax-tree/unist#tree
+
+[hast]: https://github.com/syntax-tree/hast
+
+[u]: https://github.com/syntax-tree/unist-builder
 
 [escodegen]: https://github.com/estools/escodegen
 
-[unist-builder-blueprint-cli]: https://github.com/eush77/unist-builder-blueprint-cli
+[call-expression]: https://github.com/estree/estree/blob/master/es5.md#callexpression
