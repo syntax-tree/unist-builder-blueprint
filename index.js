@@ -1,12 +1,14 @@
 'use strict'
 
-module.exports = function(tree, options) {
+module.exports = toU
+
+function toU(tree, options) {
   var settings = options || {}
   var builder = settings.builder || 'u'
 
-  return toU(tree)
+  return transform(tree)
 
-  function toU(node) {
+  function transform(node) {
     var args = [literal(node.type)]
     var props = []
     var key
@@ -24,7 +26,10 @@ module.exports = function(tree, options) {
     if ('value' in node) {
       args.push(literal(node.value))
     } else if ('children' in node) {
-      args.push({type: 'ArrayExpression', elements: node.children.map(toU)})
+      args.push({
+        type: 'ArrayExpression',
+        elements: node.children.map(transform)
+      })
     }
 
     return {
