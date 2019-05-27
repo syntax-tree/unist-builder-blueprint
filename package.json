@@ -1,31 +1,28 @@
 {
   "name": "unist-builder-blueprint",
   "version": "1.0.0",
-  "description": "Convert Unist trees to unist-builder notation",
-  "author": "Eugene Sharygin <eush77@gmail.com>",
+  "description": "Transform unist trees to unist-builder notation",
   "license": "MIT",
-  "scripts": {
-    "test": "tape test/*.js"
-  },
-  "files": [
-    "index.js"
-  ],
-  "homepage": "https://github.com/eush77/unist-builder-blueprint",
-  "repository": "eush77/unist-builder-blueprint",
-  "bugs": {
-    "url": "https://github.com/eush77/unist-builder-blueprint/issues"
-  },
   "keywords": [
+    "unist",
+    "util",
+    "utility",
+    "unist-builder",
     "ast",
-    "blueprint",
-    "convert",
-    "dsl",
-    "notation",
+    "cst",
     "syntax",
     "tree",
-    "u",
-    "unist",
-    "unist-builder"
+    "blueprint"
+  ],
+  "repository": "syntax-tree/unist-builder-blueprint",
+  "bugs": "https://github.com/syntax-tree/unist-builder-blueprint/issues",
+  "author": "Eugene Sharygin <eush77@gmail.com>",
+  "contributors": [
+    "Eugene Sharygin <eush77@gmail.com>",
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
   ],
   "dependencies": {
     "flatmap": "0.0.3"
@@ -35,5 +32,8 @@
     "escodegen": "^1.8.0",
     "tape": "^4.4.0",
     "unist-builder": "^1.0.0"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
   }
 }
