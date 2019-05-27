@@ -2,17 +2,10 @@
 
 # unist-builder-blueprint
 
-[![Build Status][travis-badge]][travis] [![Dependency Status][david-badge]][david]
+[![Build Status][travis-badge]][travis]
+[![Dependency Status][david-badge]][david]
 
 Convert [Unist][] trees to [unist-builder][] notation.
-
-[unist]:  https://github.com/wooorm/unist
-[unist-builder]: https://github.com/eush77/unist-builder
-
-[travis]: https://travis-ci.org/eush77/unist-builder-blueprint
-[travis-badge]: https://travis-ci.org/eush77/unist-builder-blueprint.svg?branch=master
-[david]: https://david-dm.org/eush77/unist-builder-blueprint
-[david-badge]: https://david-dm.org/eush77/unist-builder-blueprint.png
 
 ## Example
 
@@ -76,19 +69,17 @@ u('root', [
 
 #### `toU(ast, [opts])`
 
-Converts `ast` to [unist-builder][] notation. Returns JavaScript AST in [ESTree][] format.
+Converts `ast` to [unist-builder][] notation.
+Returns JavaScript AST in [ESTree][] format.
 
-To generate actual JavaScript code from AST, use one of the existing code generators, e.g. [Escodegen][].
+To generate actual JavaScript code from AST, use one of the existing code
+generators, e.g. [Escodegen][].
 
 ##### `opts.builder`
 
-Type: `String`<br>
-Default: `"u"`
+Type: `String` Default: `"u"`
 
 Builder function name.
-
-[estree]: https://github.com/estree/estree
-[escodegen]: https://github.com/estools/escodegen
 
 ## CLI
 
@@ -96,17 +87,33 @@ See [unist-builder-blueprint-cli][].
 
 ## Related
 
--   [unist-builder][] — helper for creating Unist trees.
--   [unist-builder-blueprint-cli][] — CLI for this module.
-
-[unist-builder-blueprint-cli]: https://github.com/eush77/unist-builder-blueprint-cli
+*   [unist-builder][] — helper for creating Unist trees.
+*   [unist-builder-blueprint-cli][] — CLI for this module.
 
 ## Install
 
-```
+```sh
 npm install unist-builder-blueprint
 ```
 
 ## License
 
 MIT
+
+[unist]: https://github.com/wooorm/unist
+
+[unist-builder]: https://github.com/eush77/unist-builder
+
+[travis]: https://travis-ci.org/eush77/unist-builder-blueprint
+
+[travis-badge]: https://travis-ci.org/eush77/unist-builder-blueprint.svg?branch=master
+
+[david]: https://david-dm.org/eush77/unist-builder-blueprint
+
+[david-badge]: https://david-dm.org/eush77/unist-builder-blueprint.png
+
+[estree]: https://github.com/estree/estree
+
+[escodegen]: https://github.com/estools/escodegen
+
+[unist-builder-blueprint-cli]: https://github.com/eush77/unist-builder-blueprint-cli

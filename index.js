@@ -1,13 +1,12 @@
-'use strict';
+'use strict'
 
-var flatmap = require('flatmap');
+var flatmap = require('flatmap')
 
+module.exports = function(unist, opts) {
+  opts = opts || {}
+  opts.builder = opts.builder || 'u'
 
-module.exports = function (unist, opts) {
-  opts = opts || {};
-  opts.builder = opts.builder || 'u';
-
-  return (function toU (node) {
+  return (function toU(node) {
     return {
       type: 'CallExpression',
       callee: {
@@ -29,22 +28,21 @@ module.exports = function (unist, opts) {
           elements: node.children.map(toU)
         }
       ].filter(Boolean)
-    };
-  }(unist));
-};
-
+    }
+  })(unist)
+}
 
 // Create ESTree object literal node representing Unist node properties.
-function propsNode (node) {
-  var props = flatmap(Object.keys(node), function (key) {
-    if (key == 'type' || key == 'value' || key == 'children') {
-      return;
+function propsNode(node) {
+  var props = flatmap(Object.keys(node), function(key) {
+    if (key === 'type' || key === 'value' || key === 'children') {
+      return
     }
 
-    var value = node[key];
+    var value = node[key]
 
-    if (key == 'data') {
-      value = JSON.parse(JSON.stringify(value));
+    if (key === 'data') {
+      value = JSON.parse(JSON.stringify(value))
     }
 
     return {
@@ -54,43 +52,42 @@ function propsNode (node) {
         name: key
       },
       value: literalNode(value)
-    };
-  });
+    }
+  })
 
-  return props.length && {
-    type: 'ObjectExpression',
-    properties: props
-  };
+  return (
+    props.length && {
+      type: 'ObjectExpression',
+      properties: props
+    }
+  )
 }
 
-
 // Create ESTree node representing particular JavaScript literal.
-function literalNode (value) {
+function literalNode(value) {
   if (value === undefined) {
     return {
       type: 'Identifier',
       name: 'undefined'
-    };
+    }
   }
-  else if (typeof value == 'function') {
-    throw Error('Unist property contains a function');
-  }
-  else if (value === null || typeof value != 'object') {
+
+  if (typeof value === 'function') {
+    throw new TypeError('Unist property contains a function')
+  } else if (value === null || typeof value !== 'object') {
     return {
       type: 'Literal',
       value: value
-    };
-  }
-  else if (Array.isArray(value)) {
+    }
+  } else if (Array.isArray(value)) {
     return {
       type: 'ArrayExpression',
       elements: value.map(literalNode)
-    };
-  }
-  else {
+    }
+  } else {
     return {
       type: 'ObjectExpression',
-      properties: Object.keys(value).map(function (key) {
+      properties: Object.keys(value).map(function(key) {
         return {
           type: 'Property',
           key: {
@@ -98,8 +95,8 @@ function literalNode (value) {
             name: key
           },
           value: literalNode(value[key])
-        };
+        }
       })
-    };
+    }
   }
 }
