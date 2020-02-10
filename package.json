@@ -1,6 +1,6 @@
 {
   "name": "unist-builder-blueprint",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "unist utility to transform trees to unist-builder notation",
   "license": "MIT",
   "keywords": [
