@@ -18,7 +18,7 @@ notation.
 npm install unist-builder-blueprint
 ```
 
-## Usage
+## Use
 
 ```js
 var escodegen = require('escodegen')
@@ -89,12 +89,14 @@ generators, such as [`escodegen`][escodegen].
 
 ## Related
 
-*   [`unist-builder`][u]
-    — Create [unist][] trees
 *   [`unist-builder-blueprint-cli`](https://github.com/syntax-tree/unist-builder-blueprint-cli)
     — CLI for this module
+*   [`unist-builder`][u]
+    — Create a new trees with a nice syntax
 *   [`hastscript`](https://github.com/syntax-tree/hastscript)
     — Create [hast][] trees
+*   [`xastscript`](https://github.com/syntax-tree/xastscript)
+    — Create [xast][] trees
 
 ## Contribute
 
@@ -130,7 +132,7 @@ abide by its terms.
 
 [collective]: https://opencollective.com/unified
 
-[chat-badge]: https://img.shields.io/badge/join%20the%20community-on%20spectrum-7b16ff.svg
+[chat-badge]: https://img.shields.io/badge/chat-spectrum-7b16ff.svg
 
 [chat]: https://spectrum.chat/unified/syntax-tree
 
@@ -151,6 +153,8 @@ abide by its terms.
 [tree]: https://github.com/syntax-tree/unist#tree
 
 [hast]: https://github.com/syntax-tree/hast
+
+[xast]: https://github.com/syntax-tree/xast
 
 [u]: https://github.com/syntax-tree/unist-builder
 
