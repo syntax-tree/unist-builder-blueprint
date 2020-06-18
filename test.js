@@ -8,24 +8,24 @@ var toU = require('.')
 
 test.Test.prototype.checkU = checkU
 
-test('unist-builder-blueprint', function(t) {
-  t.checkU(function() {
+test('unist-builder-blueprint', function (t) {
+  t.checkU(function () {
     return u('rule')
   }, 'type only (void)')
 
-  t.checkU(function() {
+  t.checkU(function () {
     return u('text', 'foo')
   }, 'type and value (literal)')
 
-  t.checkU(function() {
+  t.checkU(function () {
     return u('node', [])
   }, 'type and empty children (parent, leaf)')
 
-  t.checkU(function() {
+  t.checkU(function () {
     return u('node', [u('text', 'bar')])
   }, 'type and children (parent, branch)')
 
-  t.checkU(function() {
+  t.checkU(function () {
     return u('root', {childIndex: undefined, leaf: false}, [
       u('node', {leaf: false, childIndex: 0}, [
         u('text', {childIndex: 0, leaf: true, raw: 'Foo'}, 'foo')
@@ -42,7 +42,7 @@ test('unist-builder-blueprint', function(t) {
         level2: [Object.create(null), String.prototype]
       }
     }),
-    function() {
+    function () {
       return u('node', {
         array: [1, 2, 3],
         object: {foo: 'bar', level2: [{}, {}]}
@@ -51,7 +51,7 @@ test('unist-builder-blueprint', function(t) {
     'composites'
   )
 
-  t.checkU(function() {
+  t.checkU(function () {
     return u('node', {
       position: {
         start: {line: 1, column: 1},
@@ -78,7 +78,7 @@ test('unist-builder-blueprint', function(t) {
       number: 1,
       string: ''
     }),
-    function() {
+    function () {
       return u('node', {
         data: {
           undefined: undefined,
@@ -99,17 +99,17 @@ test('unist-builder-blueprint', function(t) {
     'data'
   )
 
-  t.checkU(function() {
+  t.checkU(function () {
     return u('text', '')
   }, 'empty value')
 
-  t.throws(function() {
+  t.throws(function () {
     toU(
       u('node', {
         foo: {
           bar: [
             'baz',
-            function() {
+            function () {
               return 'quux frobozz'
             }
           ]
@@ -121,14 +121,14 @@ test('unist-builder-blueprint', function(t) {
   t.end()
 })
 
-test('options.builder', function(t) {
+test('options.builder', function (t) {
   var tree = u('root', {id: 1}, [u('text', {id: 2}, 'foo'), u('empty', [])])
   var code = generate(toU(tree, {builder: 'n'}))
   var n = u
 
   t.equal(
     code,
-    body(function() {
+    body(function () {
       return n('root', {id: 1}, [n('text', {id: 2}, 'foo'), n('empty', [])])
     })
   )
