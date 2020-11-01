@@ -19,7 +19,7 @@ function toU(tree, options) {
       }
     }
 
-    if (props.length !== 0) {
+    if (props.length > 0) {
       args.push({type: 'ObjectExpression', properties: props})
     }
 
