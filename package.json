@@ -66,8 +66,9 @@
     "prettier": true,
     "esnext": false,
     "rules": {
-      "unicorn/no-fn-reference-in-iterator": "off",
-      "guard-for-in": "off"
+      "guard-for-in": "off",
+      "unicorn/explicit-length-check": "off",
+      "unicorn/no-fn-reference-in-iterator": "off"
     }
   },
   "remarkConfig": {

@@ -9,24 +9,28 @@ function toU(tree, options) {
   return transform(tree)
 
   function transform(node) {
-    var args = [literal(node.type)]
+    var parameters = [{type: 'Literal', value: node.type}]
     var props = []
     var key
 
     for (key in node) {
       if (key !== 'type' && key !== 'value' && key !== 'children') {
-        props.push(property(key, node[key]))
+        props.push({
+          type: 'Property',
+          key: {type: 'Identifier', name: key},
+          value: toValue(node[key])
+        })
       }
     }
 
-    if (props.length > 0) {
-      args.push({type: 'ObjectExpression', properties: props})
+    if (props.length) {
+      parameters.push({type: 'ObjectExpression', properties: props})
     }
 
     if ('value' in node) {
-      args.push(literal(node.value))
+      parameters.push({type: 'Literal', value: node.value})
     } else if ('children' in node) {
-      args.push({
+      parameters.push({
         type: 'ArrayExpression',
         elements: node.children.map(transform)
       })
@@ -34,8 +38,8 @@ function toU(tree, options) {
 
     return {
       type: 'CallExpression',
-      callee: identifier(builder),
-      arguments: args
+      callee: {type: 'Identifier', name: builder},
+      arguments: parameters
     }
   }
 }
@@ -43,7 +47,7 @@ function toU(tree, options) {
 // Create ESTree node representing particular JavaScript literal.
 function toValue(value) {
   if (value === undefined) {
-    return identifier('undefined')
+    return {type: 'Identifier', name: 'undefined'}
   }
 
   if (
@@ -52,55 +56,40 @@ function toValue(value) {
     typeof value === 'number' ||
     typeof value === 'boolean'
   ) {
-    return literal(value)
+    return {type: 'Literal', value: value}
   }
 
   if (typeof value === 'object') {
-    return Array.isArray(value) ? array(value) : object(value)
+    return Array.isArray(value)
+      ? {type: 'ArrayExpression', elements: elements(value)}
+      : {type: 'ObjectExpression', properties: properties(value)}
   }
 
   throw new Error('Invalid non-JSON value in unist tree: ' + String(value))
 }
 
-function array(value) {
-  return {type: 'ArrayExpression', elements: elements(value)}
-}
-
-function object(value) {
-  return {type: 'ObjectExpression', properties: properties(value)}
-}
-
-function property(key, value) {
-  return {type: 'Property', key: identifier(key), value: toValue(value)}
-}
-
-function identifier(name) {
-  return {type: 'Identifier', name: name}
-}
-
-function literal(value) {
-  return {type: 'Literal', value: value}
-}
-
 function elements(value) {
-  var length = value.length
   var index = -1
-  var values = []
+  var result = []
 
-  while (++index < length) {
-    values.push(toValue(value[index]))
+  while (++index < value.length) {
+    result.push(toValue(value[index]))
   }
 
-  return values
+  return result
 }
 
 function properties(value) {
-  var values = []
+  var result = []
   var key
 
   for (key in value) {
-    values.push(property(key, value[key]))
+    result.push({
+      type: 'Property',
+      key: {type: 'Identifier', name: key},
+      value: toValue(value[key])
+    })
   }
 
-  return values
+  return result
 }
